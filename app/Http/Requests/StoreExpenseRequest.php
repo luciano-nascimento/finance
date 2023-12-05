@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueDescriptionInSameMonth;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreExpenseRequest extends FormRequest
@@ -21,9 +23,16 @@ class StoreExpenseRequest extends FormRequest
      */
     public function rules(): array
     {
+        $descriptionMonth = Carbon::createFromFormat('Y-m-d', $this->request->get('date'))
+            ->month;
+
         return [
-            'description' => ['required', 'unique:expenses,description', 'max:500'],
             'date' => ['required', 'date'],
+            'description' => [
+                'required',
+                new UniqueDescriptionInSameMonth($descriptionMonth),
+                'max:500'
+            ],  
             'amount'  => ['required', 'decimal:0,10']
         ];
     }
