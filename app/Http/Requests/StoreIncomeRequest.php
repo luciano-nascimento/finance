@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\StoreExpenseUniqueDescriptionInSameMonth;
+use App\Rules\StoreIncomeUniqueDescriptionInSameMonth;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Log;
 
-class StoreExpenseRequest extends FormRequest
+class StoreIncomeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,7 @@ class StoreExpenseRequest extends FormRequest
      */
     public function rules(): array
     {
+
         $descriptionMonth = '';
 
         try {
@@ -37,7 +38,7 @@ class StoreExpenseRequest extends FormRequest
             'date' => ['required', 'date'],
             'description' => [
                 'required',
-                new StoreExpenseUniqueDescriptionInSameMonth($descriptionMonth),
+                new StoreIncomeUniqueDescriptionInSameMonth($descriptionMonth),
                 'max:500'
             ],  
             'amount'  => ['required', 'decimal:0,10']

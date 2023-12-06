@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreExpenseRequest;
-use App\Http\Resources\ExpenseResource;
-use App\Models\Expense;
+use App\Http\Requests\StoreIncomeRequest;
+use App\Http\Resources\IncomeResource;
+use App\Models\Income;
 use Illuminate\Http\Request;
 
-class ExpensesController extends Controller
+class IncomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $expenses = Expense::all();
-        return ExpenseResource::collection($expenses);
+        $income = Income::all();
+        return IncomeResource::collection($income);
     }
 
     /**
@@ -30,24 +30,24 @@ class ExpensesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreExpenseRequest $request)
+    public function store(StoreIncomeRequest $request)
     {
-        $expense = Expense::create($request->all());
-        return new ExpenseResource($expense);
+        $income = Income::create($request->all());
+        return new IncomeResource($income);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Expense $expense)
+    public function show(Income $income)
     {
-        return new ExpenseResource($expense);
+        return new IncomeResource($income);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Expense $expense)
+    public function edit(Income $income)
     {
         //
     }
@@ -55,18 +55,18 @@ class ExpensesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreExpenseRequest $request, Expense $expense)
+    public function update(StoreIncomeRequest $request, Income $income)
     {
-        $expense->update($request->all());
-        return new expenseResource($expense);
+        $income->update($request->all());
+        return new IncomeResource($income);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Expense $expense)
+    public function destroy(Income $income)
     {
-        $expense->delete();
+        $income->delete();
         return response(null, 204);
     }
 }
