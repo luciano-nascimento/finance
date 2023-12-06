@@ -40,7 +40,7 @@ class StoreIncomeRequest extends FormRequest
                 'required',
                 new StoreIncomeUniqueDescriptionInSameMonth($descriptionMonth),
                 'max:500'
-            ],  
+            ],
             'amount'  => ['required', 'decimal:0,10']
         ];
     }
