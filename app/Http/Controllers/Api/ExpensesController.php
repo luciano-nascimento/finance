@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Services\Expense\ExpenseStoreService;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Resources\ExpenseResource;
+use App\Http\Controllers\Controller;
 use App\Models\Expense;
-use Illuminate\Http\Request;
 
 class ExpensesController extends Controller
 {
+    public function __construct(private ExpenseStoreService $expenseStoreService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -32,8 +36,7 @@ class ExpensesController extends Controller
      */
     public function store(StoreExpenseRequest $request)
     {
-        $expense = Expense::create($request->all());
-        return new ExpenseResource($expense);
+        $this->expenseStoreService->store($request);
     }
 
     /**

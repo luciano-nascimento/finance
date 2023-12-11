@@ -40,7 +40,8 @@ class StoreExpenseRequest extends FormRequest
                 new StoreExpenseUniqueDescriptionInSameMonth($descriptionMonth),
                 'max:500'
             ],
-            'amount'  => ['required', 'decimal:0,10']
+            'amount'  => ['required', 'decimal:0,10'],
+            'category_id' => ['numeric']
         ];
     }
 }
