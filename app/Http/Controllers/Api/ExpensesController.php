@@ -2,25 +2,29 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Services\Expense\ExpenseStoreService;
-use App\Http\Requests\StoreExpenseRequest;
-use App\Http\Resources\ExpenseResource;
-use App\Http\Controllers\Controller;
 use App\Models\Expense;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ExpenseResource;
+use App\Http\Requests\StoreExpenseRequest;
+use App\Services\Expense\ExpenseStoreService;
+use App\Services\Expense\ExpenseFindService;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ExpensesController extends Controller
 {
-    public function __construct(private ExpenseStoreService $expenseStoreService)
-    {
+    public function __construct(
+        private ExpenseStoreService $expenseStoreService,
+        private ExpenseFindService $expenseFindService
+    ) {
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $expenses = Expense::all();
-        return ExpenseResource::collection($expenses);
+        return $this->expenseFindService->getAll($request);
     }
 
     /**

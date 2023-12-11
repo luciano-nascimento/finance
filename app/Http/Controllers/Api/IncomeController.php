@@ -6,17 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreIncomeRequest;
 use App\Http\Resources\IncomeResource;
 use App\Models\Income;
+use App\Services\Income\IncomeFindService;
 use Illuminate\Http\Request;
 
 class IncomeController extends Controller
 {
+    public function __construct(
+        private IncomeFindService $incomeFindService
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $income = Income::all();
-        return IncomeResource::collection($income);
+        return $this->incomeFindService->getAll($request);
     }
 
     /**
