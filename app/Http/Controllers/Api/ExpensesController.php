@@ -48,7 +48,12 @@ class ExpensesController extends Controller
      */
     public function show(Expense $expense)
     {
-        return new ExpenseResource($expense);
+        return new ExpenseResource(
+            $expense
+                ->where('id', $expense->id)
+                ->with('category')
+                ->get()
+        );
     }
 
     /**

@@ -12,4 +12,5 @@ class Income extends Model
     protected $table = 'income';
 
     protected $fillable = ['description', 'amount', 'date'];
+
 }

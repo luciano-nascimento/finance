@@ -22,7 +22,7 @@ class ExpenseFindService
         }
 
         return ExpenseResource::collection(
-            $expenses->get()
+            $expenses->with('category')->get()
         );
     }
 }
