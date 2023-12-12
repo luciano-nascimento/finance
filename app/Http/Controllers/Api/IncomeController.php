@@ -8,6 +8,7 @@ use App\Http\Resources\IncomeResource;
 use App\Models\Income;
 use App\Services\Income\IncomeFindService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class IncomeController extends Controller
 {
@@ -73,5 +74,10 @@ class IncomeController extends Controller
     {
         $income->delete();
         return response(null, 204);
+    }
+
+    public function indexByYearAndMonth(int $year, int $month): AnonymousResourceCollection
+    {
+        return $this->incomeFindService->indexByYearAndMonth($year, $month);
     }
 }

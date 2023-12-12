@@ -26,4 +26,15 @@ class IncomeFindService
         );
     }
 
+    public function indexByYearAndMonth(int $year, int $month): AnonymousResourceCollection
+    {
+        $income = Income::whereYear('date', $year)
+               ->whereMonth('date', $month)
+               ->get();
+
+        return IncomeResource::collection(
+            $income
+        );
+    }
+
 }

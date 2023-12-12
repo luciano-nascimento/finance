@@ -21,5 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('expenses', ExpensesController::class);
+Route::controller(ExpensesController::class)->group(function () {
+    Route::get('/expenses/{year}/{month}', 'indexByYearAndMonth');
+});
+
 
 Route::apiResource('income', IncomeController::class);
+Route::controller(IncomeController::class)->group(function () {
+    Route::get('/income/{year}/{month}', 'indexByYearAndMonth');
+});
+

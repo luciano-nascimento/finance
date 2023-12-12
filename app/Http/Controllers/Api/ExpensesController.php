@@ -81,4 +81,9 @@ class ExpensesController extends Controller
         $expense->delete();
         return response(null, 204);
     }
+
+    public function indexByYearAndMonth(int $year, int $month): AnonymousResourceCollection
+    {
+        return $this->expenseFindService->indexByYearAndMonth($year, $month);
+    }
 }

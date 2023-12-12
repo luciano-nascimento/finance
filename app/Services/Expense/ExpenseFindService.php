@@ -25,4 +25,15 @@ class ExpenseFindService
             $expenses->with('category')->get()
         );
     }
+
+    public function indexByYearAndMonth(int $year, int $month): AnonymousResourceCollection
+    {
+        $expenses = Expense::whereYear('date', $year)
+               ->whereMonth('date', $month)
+               ->get();
+
+        return ExpenseResource::collection(
+            $expenses
+        );
+    }
 }
