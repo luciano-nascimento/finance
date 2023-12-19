@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ExpensesController;
 use App\Http\Controllers\Api\IncomeController;
+use App\Http\Controllers\ResumeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +26,9 @@ Route::controller(ExpensesController::class)->group(function () {
     Route::get('/expenses/{year}/{month}', 'indexByYearAndMonth');
 });
 
-
 Route::apiResource('income', IncomeController::class);
 Route::controller(IncomeController::class)->group(function () {
     Route::get('/income/{year}/{month}', 'indexByYearAndMonth');
 });
 
+Route::get('/resume/{year}/{month}', [ResumeController::class, 'getResumeByYearAndMonth']);
