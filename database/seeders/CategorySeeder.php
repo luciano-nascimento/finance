@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,42 +15,27 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('categories')->insert(
-            [
+
+        $categories = [
+            'Food',
+            'Health',
+            'Housing',
+            'Transport',
+            'Education',
+            'Leisure',
+            'Unforeseen events',
+            'Others'
+        ];
+
+        foreach ($categories as $category) {
+            Category::firstOrCreate(
                 [
-                    'description' => 'Food',
-                    'created_at' => Carbon::now()->toDateTimeString()
+                    'description' => $category,
                 ],
                 [
-                    'description' => 'Health',
-                    'created_at' => Carbon::now()->toDateTimeString()
-                ],
-                [
-                    'description' => 'Housing',
-                    'created_at' => Carbon::now()->toDateTimeString()
-                ],
-                [
-                    'description' => 'Transport',
-                    'created_at' => Carbon::now()->toDateTimeString()
-                ],
-                [
-                    'description' => 'Education',
-                    'created_at' => Carbon::now()->toDateTimeString()
-                ],
-                [
-                    'description' => 'Leisure',
-                    'created_at' => Carbon::now()->toDateTimeString()
-                ],
-                [
-                    'description' => 'Unforeseen events',
-                    'created_at' => Carbon::now()->toDateTimeString()
-                ],
-                [
-                    'description' => 'Others',
                     'created_at' => Carbon::now()->toDateTimeString()
                 ]
-            ]
-            
-        );
+            );
+        }
     }
 }

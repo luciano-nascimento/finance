@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\ExpensesController;
 use App\Http\Controllers\Api\IncomeController;
-use App\Http\Controllers\ResumeController;
+use App\Http\Controllers\Api\ResumeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

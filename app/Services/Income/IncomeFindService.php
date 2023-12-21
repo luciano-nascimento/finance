@@ -28,8 +28,8 @@ class IncomeFindService
 
     public function indexByYearAndMonth(int $year, int $month): AnonymousResourceCollection
     {
-        $income = Income::whereYear('date', $year)
-               ->whereMonth('date', $month)
+        $income = Income::whereYear('date', (string)$year)
+               ->whereMonth('date', (string)$month)
                ->get();
 
         return IncomeResource::collection(

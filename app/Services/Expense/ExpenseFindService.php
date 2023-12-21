@@ -28,8 +28,8 @@ class ExpenseFindService
 
     public function indexByYearAndMonth(int $year, int $month): AnonymousResourceCollection
     {
-        $expenses = Expense::whereYear('date', $year)
-               ->whereMonth('date', $month)
+        $expenses = Expense::whereYear('date', (string)$year)
+               ->whereMonth('date', (string)$month)
                ->get();
 
         return ExpenseResource::collection(

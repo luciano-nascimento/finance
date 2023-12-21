@@ -9,27 +9,26 @@ use Illuminate\Http\Response;
 
 class ResumeFindService
 {
-
     public function getResumeByYearAndMonth(int $year, int $month): JsonResponse
     {
 
-        $totalIncomeByMonthAndYear = Income::whereMonth('date', $month)
-            ->whereYear('date', $year)
+        $totalIncomeByMonthAndYear = Income::whereMonth('date', (string)$month)
+            ->whereYear('date', (string)$year)
             ->sum('amount');
 
-        $totalExpenseByMonthAndYear = Expense::whereMonth('date', $month)
-            ->whereYear('date', $year)
+        $totalExpenseByMonthAndYear = Expense::whereMonth('date', (string)$month)
+            ->whereYear('date', (string)$year)
             ->sum('amount');
-            
+
         $monthBalance = $totalIncomeByMonthAndYear - $totalExpenseByMonthAndYear;
 
         $monthTotalSpentByCategory = Expense::join('categories as c', 'c.id', '=', 'expenses.category_id')
-            ->whereMonth('date', $month)
-            ->whereYear('date', $year)
-            ->selectRaw('SUM(expenses.amount) as amount, c.description')
-            ->groupBy('expenses.category_id', 'c.description')
+            ->whereMonth('date', (string)$month)
+            ->whereYear('date', (string)$year)
+            ->selectRaw('c.id, c.description, SUM(expenses.amount) as amount')
+            ->groupBy('c.id', 'expenses.category_id', 'c.description')
             ->get();
-        
+
         return response()
             ->json([
                 'total_income' =>  $totalIncomeByMonthAndYear,
@@ -39,9 +38,3 @@ class ResumeFindService
             ], Response::HTTP_OK);
     }
 }
-
-
-// select sum(e.amount) as amount, c.description from expenses e 
-// inner join categories c ON c.id = e.category_id
-// group by e.category_id, c.description
-
