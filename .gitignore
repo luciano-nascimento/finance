@@ -1,8 +1,10 @@
 /vendor/
-/storage/
 node_modules/
 npm-debug.log
 yarn-error.log
 .env
 /tools/php-cs-fixer/vendor/
 .php-cs-fixer.cache
+
+/public/storage
+/storage/*.key
