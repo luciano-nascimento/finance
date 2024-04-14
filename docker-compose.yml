@@ -1,0 +1,54 @@
+services:
+  app:
+        build: .
+        container_name: app
+        entrypoint: dockerize -wait tcp://postgres:5432 -timeout 40s ./.docker/entrypoint.sh
+        restart: always
+        tty: true
+        volumes:
+            - .:/var/www
+        networks:
+            - app-network
+        depends_on:
+            - postgres
+
+  nginx:
+      build: .docker/nginx
+      container_name: nginx
+      restart: always
+      tty: true
+      ports:
+          - "8000:80"
+      volumes:
+          - .:/var/www
+      networks:
+          - app-network
+      depends_on:
+          - app
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_DB: finance
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./db/:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    networks:
+      - app-network
+
+#Networks
+networks:
+  app-network:
+    driver: bridge
